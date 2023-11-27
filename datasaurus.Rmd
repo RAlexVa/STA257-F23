@@ -1,0 +1,41 @@
+---
+title: "Example of correlation"
+author: "Alexander Valencia"
+date: "2023-03-10"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, message=F}
+#source: https://blog.revolutionanalytics.com/2017/05/the-datasaurus-dozen.html
+#In case you need to install the package
+#install.packages("datasauRus")
+library("tidyverse")
+library("datasauRus")
+```
+
+The datasaurus dataset contains  more than 12 different datasets with very similar characteristics.
+Based on the summary below, do you have any expectations on how similar the datasets should look like?
+```{r}
+datasaurus_dozen|>
+  group_by(dataset)|>
+  summarise(mean_x = round(mean(x),2),
+            mean_y = round(mean(y),2),
+            sd_x = round(sd(x),2),
+            sd_y = round(sd(y),2),
+            cor = round(cor(x,y),2))
+```
+\newpage
+However this is how data looks like. 
+```{r}
+ggplot(datasaurus_dozen, aes(x = x, y = y, colour = dataset))+
+  geom_point() +
+  theme_void() +
+  theme(legend.position = "none")+
+  facet_wrap(~dataset, ncol = 3)
+```
+

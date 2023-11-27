@@ -1,0 +1,302 @@
+---
+title: "Understanding Covariance"
+author: "Alexander Valencia"
+date: "2023-11-27"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(mnormt)
+```
+
+
+Consider that we have $X\sim Normal(0,\sigma_x^2)$ and $Y\sim Normal(0,\sigma_y^2)$ with a correlation coefficient of $\rho_{X,Y}$
+
+Below are some examples to visualize their joint PDF and how moving the variance and correlation coefficient values has an impact to the PDF. This with the goal to understand what does it mean to have a correlation coefficient of a specific value.
+
+
+```{r, echo=F}
+vx <- 1
+vy <- 1
+rxy <- 0
+```
+
+```{r,fig.align='center', fig.dim=c(5.5, 5.5), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+
+x     <- seq(-5, 5, 0.25) 
+y     <- seq(-5, 5, 0.25)
+mu    <- c(0, 0)
+sigma <- matrix(c(vx, rxy,rxy, vy), nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), mu, sigma)
+z     <- outer(x, y, f)
+
+contour(x, y, z)
+```
+
+```{r,fig.align='center', fig.dim=c(7, 7), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+persp(x, y, z, theta = -30, phi = 25, 
+      shade = 0.75, col = "dodgerblue3", expand = 0.5, r = 2, 
+      ltheta = 25, ticktype = "detailed")
+```
+
+```{r, echo=F}
+vx <- 5
+vy <- 5
+rxy <- 0
+```
+
+```{r,fig.align='center', fig.dim=c(5.5, 5.5), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+
+x     <- seq(-5, 5, 0.25) 
+y     <- seq(-5, 5, 0.25)
+mu    <- c(0, 0)
+sigma <- matrix(c(vx, rxy,rxy, vy), nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), mu, sigma)
+z     <- outer(x, y, f)
+
+contour(x, y, z)
+```
+
+```{r,fig.align='center', fig.dim=c(7, 7), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+persp(x, y, z, theta = -30, phi = 25, 
+      shade = 0.75, col = "dodgerblue3", expand = 0.5, r = 2, 
+      ltheta = 25, ticktype = "detailed")
+```
+
+```{r, echo=F}
+vx <- 6
+vy <- 2
+rxy <- 0
+```
+
+```{r,fig.align='center', fig.dim=c(5.5, 5.5), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+
+x     <- seq(-5, 5, 0.25) 
+y     <- seq(-5, 5, 0.25)
+mu    <- c(0, 0)
+sigma <- matrix(c(vx, rxy,rxy, vy), nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), mu, sigma)
+z     <- outer(x, y, f)
+
+contour(x, y, z)
+```
+
+```{r,fig.align='center', fig.dim=c(7, 7), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+persp(x, y, z, theta = -30, phi = 25, 
+      shade = 0.75, col = "dodgerblue3", expand = 0.5, r = 2, 
+      ltheta = 25, ticktype = "detailed")
+```
+
+```{r, echo=F}
+vx <- 2
+vy <- 6
+rxy <- 0
+```
+
+```{r,fig.align='center', fig.dim=c(5.5, 5.5), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+
+x     <- seq(-5, 5, 0.25) 
+y     <- seq(-5, 5, 0.25)
+mu    <- c(0, 0)
+sigma <- matrix(c(vx, rxy,rxy, vy), nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), mu, sigma)
+z     <- outer(x, y, f)
+
+contour(x, y, z)
+```
+
+```{r,fig.align='center', fig.dim=c(7, 7), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+persp(x, y, z, theta = -30, phi = 25, 
+      shade = 0.75, col = "dodgerblue3", expand = 0.5, r = 2, 
+      ltheta = 25, ticktype = "detailed")
+```
+
+```{r, echo=F}
+vx <- 5
+vy <- 5
+rxy <- -1
+```
+
+```{r,fig.align='center', fig.dim=c(5.5, 5.5), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+
+x     <- seq(-5, 5, 0.25) 
+y     <- seq(-5, 5, 0.25)
+mu    <- c(0, 0)
+sigma <- matrix(c(vx, rxy,rxy, vy), nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), mu, sigma)
+z     <- outer(x, y, f)
+
+contour(x, y, z)
+```
+
+```{r,fig.align='center', fig.dim=c(7, 7), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+persp(x, y, z, theta = -30, phi = 25, 
+      shade = 0.75, col = "dodgerblue3", expand = 0.5, r = 2, 
+      ltheta = 25, ticktype = "detailed")
+```
+
+```{r, echo=F}
+vx <- 6
+vy <- 1
+rxy <- -1
+```
+
+```{r,fig.align='center', fig.dim=c(5.5, 5.5), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+
+x     <- seq(-5, 5, 0.25) 
+y     <- seq(-5, 5, 0.25)
+mu    <- c(0, 0)
+sigma <- matrix(c(vx, rxy,rxy, vy), nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), mu, sigma)
+z     <- outer(x, y, f)
+
+contour(x, y, z)
+```
+
+```{r,fig.align='center', fig.dim=c(7, 7), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+persp(x, y, z, theta = -30, phi = 25, 
+      shade = 0.75, col = "dodgerblue3", expand = 0.5, r = 2, 
+      ltheta = 25, ticktype = "detailed")
+```
+
+
+```{r, echo=F}
+vx <- 1
+vy <- 6
+rxy <- 1
+```
+
+```{r,fig.align='center', fig.dim=c(5.5, 5.5), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+
+x     <- seq(-5, 5, 0.25) 
+y     <- seq(-5, 5, 0.25)
+mu    <- c(0, 0)
+sigma <- matrix(c(vx, rxy,rxy, vy), nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), mu, sigma)
+z     <- outer(x, y, f)
+
+contour(x, y, z)
+```
+
+```{r,fig.align='center', fig.dim=c(7, 7), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+persp(x, y, z, theta = -30, phi = 25, 
+      shade = 0.75, col = "dodgerblue3", expand = 0.5, r = 2, 
+      ltheta = 25, ticktype = "detailed")
+```
+
+```{r, echo=F}
+vx <- 1
+vy <- 6
+rxy <- 0.5
+```
+
+```{r,fig.align='center', fig.dim=c(5.5, 5.5), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+
+x     <- seq(-5, 5, 0.25) 
+y     <- seq(-5, 5, 0.25)
+mu    <- c(0, 0)
+sigma <- matrix(c(vx, rxy,rxy, vy), nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), mu, sigma)
+z     <- outer(x, y, f)
+
+contour(x, y, z)
+```
+
+```{r,fig.align='center', fig.dim=c(7, 7), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+persp(x, y, z, theta = -30, phi = 25, 
+      shade = 0.75, col = "dodgerblue3", expand = 0.5, r = 2, 
+      ltheta = 25, ticktype = "detailed")
+```
+
+```{r, echo=F}
+vx <- 1
+vy <- 6
+rxy <- -0.6
+```
+
+```{r,fig.align='center', fig.dim=c(5.5, 5.5), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+
+x     <- seq(-5, 5, 0.25) 
+y     <- seq(-5, 5, 0.25)
+mu    <- c(0, 0)
+sigma <- matrix(c(vx, rxy,rxy, vy), nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), mu, sigma)
+z     <- outer(x, y, f)
+
+contour(x, y, z)
+```
+
+```{r,fig.align='center', fig.dim=c(7, 7), echo=F, fig.cap=paste('$\\sigma_{X}^2 =$',vx,'$\\sigma_{Y}^2=$',vy,'$,\\rho_{X,Y}=$',rxy)}
+persp(x, y, z, theta = -30, phi = 25, 
+      shade = 0.75, col = "dodgerblue3", expand = 0.5, r = 2, 
+      ltheta = 25, ticktype = "detailed")
+```
+
+
+We have been studying properties of random variables. We use this to model events in real life (for example when we model a coin fipping experiment with a Bernoulli r.v. or when we model the expected time of arrival of the next bus using an exponential r.v.)
+
+When we say that wew have 2 random variables $X$, $Y$ that are independent it means that, if we observe data that comes from each of these r.v. then there will be 0 correlation between the results that we observe among them.
+For example if $X$ models the results of fliping a coin and $Y$ models the number that we get from thworing a die.
+
+However when we say that 2 r.v. have a non-zero correlation coefficient (or non-zero covariance) it means that when we look at the paired data, we may be able to find a pattern.
+```{r, echo=F, message=FALSE, warning=FALSE}
+library(MASS)
+library(tidyverse)
+library(latex2exp)
+library(kableExtra)
+N <- 1000
+mu <- c(0,0)
+```
+
+```{r, warning=F, echo=F}
+set.seed(235)
+vx <- c(5,1,1,1,1)
+vy <- c(5,6,6,6,6)
+rxy <- c(0,1,-1,0.3,-0.6)
+bvn <- list()
+for(i in 1:length(vx)){
+  sigma <- matrix(c(vx[i], rxy[i],rxy[i], vy[i]), nrow = 2)
+bvn[[i]] <- mvrnorm(N, mu = mu, Sigma = sigma )
+}
+mat <- as.matrix(bvn[[1]])
+for(i in 2:length(vx)){
+  mat <- cbind(mat,bvn[[i]])
+}
+data <- as.data.frame(mat)
+
+
+colnames(data) <- paste0(c('x_','y_'),c(1,1)+rep(seq(0,length(vx)-1),each=2))
+
+data <- data |> 
+  pivot_longer(cols=everything(),names_to='variable', values_to='sample') |> 
+  separate(variable,into=c('variable','group'),sep='_') 
+
+data <- data|> mutate(ids=c(1,1)+rep(seq(0,(nrow(data)/2)-1),each=2))
+
+
+data <- data |>  pivot_wider(c('ids', 'group'), names_from='variable',values_from='sample')
+```
+
+```{r, echo=F}
+param <- cbind(1:length(vx),vx,vy,rxy)
+colnames(param) <- c('Table #','Var. X', 'Var. Y', 'Corr. Coef')
+kable(param)
+```
+
+
+```{r, echo=F, warning=FALSE, message=F}
+for(i in unique(data$group)){
+ ploti <-  data |> filter(group==i) |> 
+  ggplot(aes(x=x,y=y))+
+  geom_point(alpha=0.5)+
+  xlim(-5,5)+
+  ylim(-5,5)+
+  labs(title=paste0('Plot',i))
+  #labs(title=paste0('Plot',i,TeX('$\\sigma_X^2=$'),vx[i],TeX('$\\sigma_Y^2=$'),vy[i],TeX('$\\rho_{XY}$='),rxy)) 
+  print(ploti)
+}
+
+```
+
